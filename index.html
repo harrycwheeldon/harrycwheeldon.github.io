@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Transformation Programme — Harry Wheeldon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #12184a;
+    --navy-mid: #1e2760;
+    --teal: #00b5a4;
+    --teal-light: #00d4bf;
+    --teal-dim: rgba(0,181,164,0.15);
+    --white: #ffffff;
+    --off-white: #f0f4f8;
+    --grey: #8892a4;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(0,181,164,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(18,24,74,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* DECORATIVE BG ELEMENTS */
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,181,164,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* HERO */
+  #hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    text-align: center;
+  }
+
+  #hero .bg-circle { width: 700px; height: 700px; top: -200px; right: -200px; }
+  #hero .bg-circle-2 { width: 500px; height: 500px; bottom: -150px; left: -150px; }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--teal-dim);
+    border: 1px solid var(--card-border);
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  h1.hero-title span { color: var(--teal); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--grey);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    animation: fadeUp 0.6s 0.45s ease both;
+  }
+
+  .hero-meta-item {
+    text-align: center;
+  }
+
+  .hero-meta-item .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--grey);
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-meta-item .value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--grey);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.6s ease both;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+
+  /* SECTION HEADERS */
+  .section-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.8rem;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  h2.section-title span { color: var(--teal); }
+
+  .section-lead {
+    color: var(--grey);
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 680px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  /* DIAGNOSIS SECTION */
+  #diagnosis { background: var(--navy); }
+
+  .diagnosis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .diag-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diag-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .diag-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+  .diag-card:hover::before { opacity: 1; }
+
+  .diag-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .diag-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--white);
+  }
+
+  .diag-card p {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.65;
+  }
+
+  /* CORE PRINCIPLE */
+  .principle-box {
+    margin: 2.5rem 0;
+    background: linear-gradient(135deg, rgba(0,181,164,0.12), rgba(0,181,164,0.04));
+    border: 1px solid var(--teal);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .principle-box::after {
+    content: '"';
+    position: absolute;
+    right: 2rem;
+    top: -1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: rgba(0,181,164,0.08);
+    line-height: 1;
+  }
+
+  .principle-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--white);
+    max-width: 700px;
+  }
+
+  .principle-box .author {
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-size: 0.8rem;
+    color: var(--teal);
+    margin-top: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* TIERS SECTION */
+  #tiers { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%); }
+
+  .tiers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .tier-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .tier-card:hover { border-color: var(--teal); }
+  .tier-card.open { border-color: var(--teal); }
+
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.6rem 2rem;
+    user-select: none;
+  }
+
+  .tier-badge {
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tier-header-text { flex: 1; }
+
+  .tier-header-text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .tier-header-text .timespan {
+    font-size: 0.78rem;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .tier-chevron {
+    color: var(--grey);
+    font-size: 1.2rem;
+    transition: transform 0.35s ease;
+    flex-shrink: 0;
+  }
+
+  .tier-card.open .tier-chevron { transform: rotate(180deg); color: var(--teal); }
+
+  .tier-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .tier-card.open .tier-body { max-height: 600px; }
+
+  .tier-body-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .tier-col {
+    padding: 1.8rem 2rem;
+  }
+
+  .tier-col:first-child {
+    border-right: 1px solid var(--card-border);
+  }
+
+  .tier-col-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  .tier-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .tier-col ul li {
+    font-size: 0.88rem;
+    color: var(--grey);
+    line-height: 1.55;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .tier-col ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 0.75rem;
+  }
+
+  /* TIMELINE SECTION */
+  #timeline { background: var(--navy); }
+
+  .timeline-wrapper {
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 28px;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--card-border);
+    z-index: 0;
+  }
+
+  .timeline-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .timeline-nodes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .timeline-node.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .node-dot {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .timeline-node.visible .node-dot {
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  .node-content {
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .node-month {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .node-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .node-desc {
+    font-size: 0.75rem;
+    color: var(--grey);
+    line-height: 1.55;
+  }
+
+  /* CLOSING SECTION */
+  #closing {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+    text-align: center;
+  }
+
+  .closing-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-4px);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  .closing-cta {
+    margin-top: 2rem;
+    color: var(--grey);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .presenter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 3rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .presenter-tag .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--navy-mid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .presenter-tag .name {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .presenter-tag .role {
+    font-size: 0.75rem;
+    color: var(--grey);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* DIVIDER */
+  .teal-line {
+    width: 48px;
+    height: 3px;
+    background: var(--teal);
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 6rem 1.5rem 3rem; }
+    .diagnosis-grid { grid-template-columns: 1fr; }
+    .tier-body-inner { grid-template-columns: 1fr; }
+    .tier-col:first-child { border-right: none; border-bottom: 1px solid var(--card-border); }
+    .timeline-nodes { grid-template-columns: 1fr; gap: 1.5rem; }
+    .timeline-track { display: none; }
+    .closing-stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">HW × Progeny</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Overview</a></li>
+    <li><a href="#diagnosis">The Challenge</a></li>
+    <li><a href="#tiers">The Approach</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#closing">Summary</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg-circle"></div>
+  <div class="bg-circle bg-circle-2"></div>
+  <div class="section-inner">
+    <div class="hero-tag">Finance Transformation Programme — Progeny Group</div>
+    <h1 class="hero-title">Building the Engine<br>for <span>What Comes Next</span></h1>
+    <p class="hero-sub">A practical, prioritised approach to transforming Progeny's finance function — freeing the team's time, sharpening the numbers, and positioning Finance at the centre of the business.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="label">Presented by</div>
+        <div class="value">Harry Wheeldon</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Presented to</div>
+        <div class="value">Vicki Turner & Martyn Wormald</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Horizon</div>
+        <div class="value">0 – 6 Months</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section id="diagnosis">
+  <div class="section-inner">
+    <div class="section-tag reveal">The Starting Point</div>
+    <h2 class="section-title reveal reveal-delay-1">Understanding<br><span>the Challenge</span></h2>
+    <p class="section-lead reveal reveal-delay-2">21 acquisitions. Multiple systems. Inconsistent processes. Increasing pressure on Finance to deliver timely, accurate information. Before designing the solution, we need to be honest about what we're dealing with.</p>
+    <div class="teal-line reveal reveal-delay-2"></div>
+
+    <div class="diagnosis-grid">
+      <div class="diag-card reveal reveal-delay-1">
+        <div class="diag-icon">⏱️</div>
+        <h3>Time is the real constraint</h3>
+        <p>When month-end takes a full month, the team has no capacity left for transformation. Every initiative competes for the same stretched resource. Before we can fix anything, we need to buy back time.</p>
+      </div>
+      <div class="diag-card reveal reveal-delay-2">
+        <div class="diag-icon">🔀</div>
+        <h3>Inconsistency across entities</h3>
+        <p>Rapid growth through acquisition means multiple different ways of doing things — different systems, different standards, different levels of rigour. Inconsistency creates ambiguity, and ambiguity slows everything down.</p>
+      </div>
+      <div class="diag-card reveal reveal-delay-3">
+        <div class="diag-icon">📊</div>
+        <h3>Finance is reactive, not proactive</h3>
+        <p>SLT and the PE house are asking questions Finance can't answer quickly. Without live visibility, Finance spends time fielding queries rather than driving insight. That needs to change.</p>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="section-inner">
+    <div class="section-tag reveal">Impact vs Effort</div>
+    <h2 class="section-title reveal reveal-delay-1">The Approach:<br><span>Three Tiers</span></h2>
+    <p class="section-lead reveal reveal-delay-2">Prioritised by impact relative to the time they cost to implement. Each tier unlocks the next. Click each tier to explore the detail.</p>
+
+    <div class="tiers-container">
+
+      <!-- TIER 1 -->
+      <div class="tier-card reveal reveal-delay-1" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 1</div>
+          <div class="tier-header-text">
+            <h3>Buy Back the Time</h3>
+            <div class="timespan">Month 1 – 2 &nbsp;·&nbsp; Quick wins, highest impact per hour invested</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>Accounting policy memo: set materiality thresholds and resolve key judgement calls. Fewer debates = faster close.</li>
+                <li>Audit every recurring report — kill anything nobody actually uses. Free time is transformation time.</li>
+                <li>Hard data deadlines with named ownership across the business. Finance stops waiting; the business delivers.</li>
+                <li>Identify the critical path of month-end — what is the single bottleneck holding everything else up?</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Month 1: shadow a full month-end cycle end to end — if month-end takes a month, understanding it properly takes a month too. Map every handoff, every wait, every bottleneck before touching anything.</li>
+                <li>Sit with each team member individually — they know where they get stuck and what's wasteful. That insight is gold.</li>
+                <li>Set up a simple RAG transformation tracker, visible to Vicki, Martyn, and Bobby. Progress shouldn't require chasing.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="tier-card reveal reveal-delay-2" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 2</div>
+          <div class="tier-header-text">
+            <h3>Automate the Repetitive</h3>
+            <div class="timespan">Month 2 – 4 &nbsp;·&nbsp; Target high-volume, low-value tasks</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>Identify the highest-volume, lowest-value tasks across the function — journals prepared manually across multiple entities, for example, are a strong candidate for automation where volume justifies it.</li>
+                <li>Where repetitive reporting exists, explore whether exception-based flagging could replace manual review — surfacing only the variances that need attention rather than reviewing everything.</li>
+                <li>Begin building live dashboards for SLT and the PE house — reducing inbound queries frees the team to focus on insight.</li>
+                <li>Structured process audit: categorise every task by value vs repetition. Anything low-value and repetitive is an automation candidate.</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Run AI upskilling sessions with the team — they know their roles best and will identify their own quick wins once they have the tools.</li>
+                <li>Introduce agentic AI where appropriate: tasks that are rule-based and repeatable should be delegated to automation, not people.</li>
+                <li>Ensure NetSuite integration is central to automation design — no point automating into a system we're replacing.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3 -->
+      <div class="tier-card reveal reveal-delay-3" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 3</div>
+          <div class="tier-header-text">
+            <h3>Systems &amp; Structure</h3>
+            <div class="timespan">Month 4 – 6 &nbsp;·&nbsp; High impact, high effort — requires capacity built in Tiers 1 &amp; 2</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>NetSuite rollout already underway — critical focus is ensuring all existing systems feed into it cleanly, eliminating manual re-entry.</li>
+                <li>Review team structure for fit with the future operating model — consider a revenue/costs split rather than per-entity ownership.</li>
+                <li>Standardise chart of accounts and reporting frameworks across all acquired entities.</li>
+                <li>Build the finance function that can support the next phase of M&A — scalable, automated, and audit-ready.</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Get fully up to speed on where the NetSuite implementation stands — understand integration gaps and position myself as the bridge between finance operations and technical delivery.</li>
+                <li>Map which legacy systems must remain and ensure clean data flows are designed, not manual workarounds.</li>
+                <li>Contribute to the structural review with data from the process audit — evidence-led recommendations, not assumptions.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-inner">
+    <div class="section-tag reveal">Practical Actions</div>
+    <h2 class="section-title reveal reveal-delay-1">The First<br><span>3 – 6 Months</span></h2>
+    <p class="section-lead reveal reveal-delay-2">A phased, practical roadmap. Each milestone builds on the last — early wins create the breathing room for structural change.</p>
+
+    <div class="timeline-wrapper reveal">
+      <div class="timeline-track">
+        <div class="timeline-progress" id="timelineProgress"></div>
+      </div>
+      <div class="timeline-nodes">
+
+        <div class="timeline-node" style="transition-delay:0.1s">
+          <div class="node-dot">🔍</div>
+          <div class="node-content">
+            <div class="node-month">Month 1</div>
+            <div class="node-title">Listen & Map</div>
+            <div class="node-desc">Shadow a full month-end cycle. Sit with every team member. Map every handoff and bottleneck before touching anything.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.25s">
+          <div class="node-dot">📋</div>
+          <div class="node-content">
+            <div class="node-month">Month 2–3</div>
+            <div class="node-title">Quick Wins</div>
+            <div class="node-desc">Accounting policies locked down. Report graveyard cleared. Data deadlines set. RAG tracker live.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.4s">
+          <div class="node-dot">⚡</div>
+          <div class="node-content">
+            <div class="node-month">Month 2–4</div>
+            <div class="node-title">Automate</div>
+            <div class="node-desc">High-volume, low-value tasks automated. AI upskilling underway. Dashboards in build.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.55s">
+          <div class="node-dot">🔗</div>
+          <div class="node-content">
+            <div class="node-month">Month 4–5</div>
+            <div class="node-title">Integrate</div>
+            <div class="node-desc">NetSuite integration gaps closed. Legacy systems feeding cleanly. Manual re-entry eliminated.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.7s">
+          <div class="node-dot">🚀</div>
+          <div class="node-content">
+            <div class="node-month">Month 6</div>
+            <div class="node-title">Scalable Finance</div>
+            <div class="node-desc">Month-end under a week. Live SLT dashboards. A finance function ready for the next M&A cycle.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing">
+  <div class="bg-circle" style="width:600px;height:600px;top:-100px;left:-100px;"></div>
+  <div class="section-inner">
+    <div class="section-tag reveal">Why This Works</div>
+    <h2 class="section-title reveal reveal-delay-1">The Goal:<br><span>Month-End in Under a Week</span></h2>
+    <p class="section-lead reveal reveal-delay-2" style="margin:1rem auto 0;">This isn't theory. The same approach — process audit, automation, AI adoption — took Equifax UK's month-end from 5 days finishing at 10pm to 2 days finishing at 5pm. The same discipline, applied here, gets Progeny to under a week.</p>
+
+    <div class="closing-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Clear, sequenced tiers — each one unlocking the next</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&lt;1wk</div>
+        <div class="stat-label">Target month-end close — from a full calendar month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6mo</div>
+        <div class="stat-label">To a scalable, automated, M&A-ready finance function</div>
+      </div>
+    </div>
+
+    <p class="closing-cta reveal reveal-delay-3">The transformation programme isn't a disruption to the team's work — it <em>is</em> the work. And the first step isn't a big system change or a restructure. It's spending the first month properly understanding the process — shadowing a full cycle, listening to the team, and mapping exactly where the time goes. Everything else follows from that.</p>
+
+    <div class="presenter-tag reveal reveal-delay-4">
+      <div class="avatar">HW</div>
+      <div>
+        <div class="name">Harry Wheeldon</div>
+        <div class="role">Finance Project Manager Candidate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Tier accordion
+  function toggleTier(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  // Timeline animation
+  const timelineSection = document.getElementById('timeline');
+  const timelineNodes = document.querySelectorAll('.timeline-node');
+  const progress = document.getElementById('timelineProgress');
+
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        timelineNodes.forEach(n => n.classList.add('visible'));
+        progress.style.width = '100%';
+      }
+    });
+  }, { threshold: 0.3 });
+  tlObserver.observe(timelineSection);
+</script>
+</body>
+</html>
