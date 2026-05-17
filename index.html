@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Transformation Programme — Harry Wheeldon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #12184a;
+    --navy-mid: #1e2760;
+    --teal: #00b5a4;
+    --teal-light: #00d4bf;
+    --teal-dim: rgba(0,181,164,0.15);
+    --white: #ffffff;
+    --off-white: #f0f4f8;
+    --grey: #8892a4;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(0,181,164,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(18,24,74,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* DECORATIVE BG ELEMENTS */
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,181,164,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* INTRO */
+  #intro {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    text-align: center;
+  }
+
+  #intro .bg-circle { width: 700px; height: 700px; top: -200px; right: -200px; }
+  #intro .bg-circle-2 { width: 500px; height: 500px; bottom: -150px; left: -150px; }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--teal-dim);
+    border: 1px solid var(--card-border);
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  h1.hero-title span { color: var(--teal); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--grey);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    animation: fadeUp 0.6s 0.45s ease both;
+  }
+
+  .hero-meta-item {
+    text-align: center;
+  }
+
+  .hero-meta-item .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--grey);
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-meta-item .value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--grey);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.6s ease both;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+
+  /* SECTION HEADERS */
+  .section-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.8rem;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  h2.section-title span { color: var(--teal); }
+
+  .section-lead {
+    color: var(--grey);
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 680px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  /* DIAGNOSIS SECTION */
+  #diagnosis { background: var(--navy); }
+
+  .diagnosis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .diag-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diag-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .diag-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+  .diag-card:hover::before { opacity: 1; }
+
+  .diag-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .diag-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--white);
+  }
+
+  .diag-card p {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.65;
+  }
+
+  /* CORE PRINCIPLE */
+  .principle-box {
+    margin: 2.5rem 0;
+    background: linear-gradient(135deg, rgba(0,181,164,0.12), rgba(0,181,164,0.04));
+    border: 1px solid var(--teal);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .principle-box::after {
+    content: '"';
+    position: absolute;
+    right: 2rem;
+    top: -1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: rgba(0,181,164,0.08);
+    line-height: 1;
+  }
+
+  .principle-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--white);
+    max-width: 700px;
+  }
+
+  .principle-box .author {
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-size: 0.8rem;
+    color: var(--teal);
+    margin-top: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* TIERS SECTION */
+  #tiers { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%); }
+
+  .tiers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .tier-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .tier-card:hover { border-color: var(--teal); }
+  .tier-card.open { border-color: var(--teal); }
+
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.6rem 2rem;
+    user-select: none;
+  }
+
+  .tier-badge {
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tier-header-text { flex: 1; }
+
+  .tier-header-text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .tier-header-text .timespan {
+    font-size: 0.78rem;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .tier-chevron {
+    color: var(--grey);
+    font-size: 1.2rem;
+    transition: transform 0.35s ease;
+    flex-shrink: 0;
+  }
+
+  .tier-card.open .tier-chevron { transform: rotate(180deg); color: var(--teal); }
+
+  .tier-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .tier-card.open .tier-body { max-height: 600px; }
+
+  .tier-body-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .tier-col {
+    padding: 1.8rem 2rem;
+  }
+
+  .tier-col:first-child {
+    border-right: 1px solid var(--card-border);
+  }
+
+  .tier-col-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  .tier-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .tier-col ul li {
+    font-size: 0.88rem;
+    color: var(--grey);
+    line-height: 1.55;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .tier-col ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 0.75rem;
+  }
+
+  /* TIMELINE SECTION */
+  #timeline { background: var(--navy); }
+
+  .timeline-wrapper {
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 28px;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--card-border);
+    z-index: 0;
+  }
+
+  .timeline-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .timeline-nodes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .timeline-node.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .node-dot {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .timeline-node.visible .node-dot {
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  .node-content {
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .node-month {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .node-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .node-desc {
+    font-size: 0.75rem;
+    color: var(--grey);
+    line-height: 1.55;
+  }
+
+  /* CLOSING SECTION */
+  #closing {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+    text-align: center;
+  }
+
+  .closing-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-4px);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  .closing-cta {
+    margin-top: 2rem;
+    color: var(--grey);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .presenter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 3rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .presenter-tag .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--navy-mid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .presenter-tag .name {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .presenter-tag .role {
+    font-size: 0.75rem;
+    color: var(--grey);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* DIVIDER */
+  .teal-line {
+    width: 48px;
+    height: 3px;
+    background: var(--teal);
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 6rem 1.5rem 3rem; }
+    .diagnosis-grid { grid-template-columns: 1fr; }
+    .tier-body-inner { grid-template-columns: 1fr; }
+    .tier-col:first-child { border-right: none; border-bottom: 1px solid var(--card-border); }
+    .timeline-nodes { grid-template-columns: 1fr; gap: 1.5rem; }
+    .timeline-track { display: none; }
+    .closing-stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">HW × Progeny</div>
+  <ul class="nav-links">
+    <li><a href="#intro">Overview</a></li>
+    <li><a href="#diagnosis">The Challenge</a></li>
+    <li><a href="#tiers">The Approach</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#closing">Summary</a></li>
+  </ul>
+</nav>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="bg-circle"></div>
+  <div class="bg-circle bg-circle-2"></div>
+  <div class="section-inner">
+    <div class="hero-tag">Finance Transformation Programme — Progeny Group</div>
+    <h1 class="hero-title">Building the Engine<br>for <span>What Comes Next</span></h1>
+    <p class="hero-sub">A practical, prioritised approach to transforming Progeny's finance function — freeing the team's time, sharpening the numbers, and positioning Finance at the centre of the business.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="label">Presented by</div>
+        <div class="value">Harry Wheeldon</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Presented to</div>
+        <div class="value">Vicki Turner & Martyn Wormald</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Horizon</div>
+        <div class="value">0 – 6 Months</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section id="diagnosis">
+  <div class="section-inner">
+    <div class="section-tag reveal">The Starting Point</div>
+    <h2 class="section-title reveal reveal-delay-1">Understanding<br><span>the Challenge</span></h2>
+    <p class="section-lead reveal reveal-delay-2">Multiple acquisitions. Multiple systems. Inconsistent processes. Increasing pressure on Finance to deliver timely, accurate information. Before designing the solution, we need to be honest about what we're dealing with.</p>
+    <div class="teal-line reveal reveal-delay-2"></div>
+
+    <div class="diagnosis-grid">
+      <div class="diag-card reveal reveal-delay-1">
+        <div class="diag-icon">⏱️</div>
+        <h3>Time is the real constraint</h3>
+        <p>When month-end takes a full month, the team has no capacity left for transformation. Every initiative competes for the same stretched resource. Before we can fix anything, we need to buy back time.</p>
+      </div>
+      <div class="diag-card reveal reveal-delay-2">
+        <div class="diag-icon">🔀</div>
+        <h3>Inconsistency across entities</h3>
+        <p>Rapid growth through acquisition means multiple different ways of doing things — different systems, different standards, different levels of rigour. Inconsistency creates ambiguity, and ambiguity slows everything down.</p>
+      </div>
+      <div class="diag-card reveal reveal-delay-3">
+        <div class="diag-icon">📊</div>
+        <h3>Finance is reactive, not proactive</h3>
+        <p>SLT and the PE house are asking questions Finance can't answer quickly. Without live visibility, Finance spends time fielding queries rather than driving insight. That needs to change.</p>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="section-inner">
+    <div class="section-tag reveal">Impact vs Effort</div>
+    <h2 class="section-title reveal reveal-delay-1">The Approach:<br><span>Three Tiers</span></h2>
+    <p class="section-lead reveal reveal-delay-2">Prioritised by impact relative to the time they cost to implement. Each tier unlocks the next. Click each tier to explore the detail.</p>
+
+    <div class="tiers-container">
+
+      <!-- TIER 1 -->
+      <div class="tier-card reveal reveal-delay-1" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 1</div>
+          <div class="tier-header-text">
+            <h3>Buy Back the Time</h3>
+            <div class="timespan">Month 1 – 2 &nbsp;·&nbsp; Quick wins, highest impact per hour invested</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>Accounting policy memo: set materiality thresholds and resolve key judgement calls. Fewer debates = faster close.</li>
+                <li>Audit every recurring report — kill anything nobody actually uses. Free time is transformation time.</li>
+                <li>Hard data deadlines with named ownership across the business. Finance stops waiting; the business delivers.</li>
+                <li>Identify the critical path of month-end — what is the single bottleneck holding everything else up?</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Month 1: shadow a full month-end cycle end to end — if month-end takes a month, understanding it properly takes a month too. Map every handoff, every wait, every bottleneck before touching anything.</li>
+                <li>Sit with each team member individually — they know where they get stuck and what's wasteful. That insight is gold.</li>
+                <li>Set up a simple RAG transformation tracker, visible to Vicki, Martyn, and Bobby. Progress shouldn't require chasing.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="tier-card reveal reveal-delay-2" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 2</div>
+          <div class="tier-header-text">
+            <h3>Automate the Repetitive</h3>
+            <div class="timespan">Month 2 – 4 &nbsp;·&nbsp; Target high-volume, low-value tasks</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>Identify the highest-volume, lowest-value tasks across the function — journals prepared manually across multiple entities, for example, are a strong candidate for automation where volume justifies it.</li>
+                <li>Where repetitive reporting exists, explore whether exception-based flagging could replace manual review — surfacing only the variances that need attention rather than reviewing everything.</li>
+                <li>Begin building live dashboards for SLT and the PE house — reducing inbound queries frees the team to focus on insight.</li>
+                <li>Structured process audit: categorise every task by value vs repetition. Anything low-value and repetitive is an automation candidate.</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Run AI upskilling sessions with the team — they know their roles best and will identify their own quick wins once they have the tools.</li>
+                <li>Introduce agentic AI where appropriate: tasks that are rule-based and repeatable should be delegated to automation, not people.</li>
+                <li>Ensure NetSuite integration is central to automation design — no point automating into a system we're replacing.</li>
+              </ul>
+            </div>
+          </div>
+          <div style="padding: 1.2rem 2rem; border-top: 1px solid var(--card-border); display:flex; align-items:center; gap:1rem;">
+            <button onclick="event.stopPropagation(); openDashboard()" style="background: var(--teal); color: var(--navy); border: none; border-radius: 6px; padding: 0.6rem 1.3rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; display:flex; align-items:center; gap:0.5rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+              📊 View Example SLT Dashboard
+            </button>
+            <span style="font-size:0.75rem; color:var(--grey);">Interactive example — what Finance could deliver for SLT & the PE house</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3 -->
+      <div class="tier-card reveal reveal-delay-3" onclick="toggleTier(this)">
+        <div class="tier-header">
+          <div class="tier-badge">Tier 3</div>
+          <div class="tier-header-text">
+            <h3>Systems &amp; Structure</h3>
+            <div class="timespan">Month 4 – 6 &nbsp;·&nbsp; High impact, high effort — requires capacity built in Tiers 1 &amp; 2</div>
+          </div>
+          <div class="tier-chevron">▼</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-body-inner">
+            <div class="tier-col">
+              <div class="tier-col-label">Programme Actions</div>
+              <ul>
+                <li>NetSuite rollout already underway — critical focus is ensuring all existing systems feed into it cleanly, eliminating manual re-entry.</li>
+                <li>Review team structure for fit with the future operating model — consider a revenue/costs split rather than per-entity ownership.</li>
+                <li>Standardise chart of accounts and reporting frameworks across all acquired entities.</li>
+                <li>Build the finance function that can support the next phase of M&A — scalable, automated, and audit-ready.</li>
+              </ul>
+            </div>
+            <div class="tier-col">
+              <div class="tier-col-label">My First Actions</div>
+              <ul>
+                <li>Get fully up to speed on where the NetSuite implementation stands — understand integration gaps and position myself as the bridge between finance operations and technical delivery.</li>
+                <li>Map which legacy systems must remain and ensure clean data flows are designed, not manual workarounds.</li>
+                <li>Contribute to the structural review with data from the process audit — evidence-led recommendations, not assumptions.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-inner">
+    <div class="section-tag reveal">Practical Actions</div>
+    <h2 class="section-title reveal reveal-delay-1">The First<br><span>3 – 6 Months</span></h2>
+    <p class="section-lead reveal reveal-delay-2">A phased, practical roadmap. Each milestone builds on the last — early wins create the breathing room for structural change.</p>
+
+    <div class="timeline-wrapper reveal">
+      <div class="timeline-track">
+        <div class="timeline-progress" id="timelineProgress"></div>
+      </div>
+      <div class="timeline-nodes">
+
+        <div class="timeline-node" style="transition-delay:0.1s">
+          <div class="node-dot">🔍</div>
+          <div class="node-content">
+            <div class="node-month">Month 1</div>
+            <div class="node-title">Listen & Map</div>
+            <div class="node-desc">Shadow a full month-end cycle. Sit with every team member. Map every handoff and bottleneck before touching anything.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.25s">
+          <div class="node-dot">📋</div>
+          <div class="node-content">
+            <div class="node-month">Month 2–3</div>
+            <div class="node-title">Quick Wins</div>
+            <div class="node-desc">Accounting policies locked down. Report graveyard cleared. Data deadlines set. RAG tracker live.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.4s">
+          <div class="node-dot">⚡</div>
+          <div class="node-content">
+            <div class="node-month">Month 2–4</div>
+            <div class="node-title">Automate</div>
+            <div class="node-desc">High-volume, low-value tasks automated. AI upskilling underway. Dashboards in build.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.55s">
+          <div class="node-dot">🔗</div>
+          <div class="node-content">
+            <div class="node-month">Month 4–5</div>
+            <div class="node-title">Integrate</div>
+            <div class="node-desc">NetSuite integration gaps closed. Legacy systems feeding cleanly. Manual re-entry eliminated.</div>
+          </div>
+        </div>
+
+        <div class="timeline-node" style="transition-delay:0.7s">
+          <div class="node-dot">🚀</div>
+          <div class="node-content">
+            <div class="node-month">Month 6</div>
+            <div class="node-title">Scalable Finance</div>
+            <div class="node-desc">Month-end under a week. Live SLT dashboards. A finance function ready for the next M&A cycle.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing">
+  <div class="bg-circle" style="width:600px;height:600px;top:-100px;left:-100px;"></div>
+  <div class="section-inner">
+    <div class="section-tag reveal">Why This Works</div>
+    <h2 class="section-title reveal reveal-delay-1">The Goal:<br><span>Month-End in Under a Week</span></h2>
+    <p class="section-lead reveal reveal-delay-2" style="margin:1rem auto 0;">This isn't theory. The same approach — process audit, automation, AI adoption — took Equifax UK's month-end from 5 days finishing at 10pm to 2 days finishing at 5pm. The same discipline, applied here, gets Progeny to under a week.</p>
+
+    <div class="closing-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Clear, sequenced tiers — each one unlocking the next</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&lt;1wk</div>
+        <div class="stat-label">Target month-end close — from a full calendar month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6mo</div>
+        <div class="stat-label">To a scalable, automated, M&A-ready finance function</div>
+      </div>
+    </div>
+
+    <p class="closing-cta reveal reveal-delay-3">The transformation programme isn't a disruption to the team's work — it <em>is</em> the work. And the first step isn't a big system change or a restructure. It's spending the first month properly understanding the process — shadowing a full cycle, listening to the team, and mapping exactly where the time goes. Everything else follows from that.</p>
+
+    <div class="presenter-tag reveal reveal-delay-4">
+      <div class="avatar">HW</div>
+      <div>
+        <div class="name">Harry Wheeldon</div>
+        <div class="role">Finance Project Manager Candidate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* DASHBOARD MODAL */
+#dashModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10,14,40,0.92);
+  backdrop-filter: blur(8px);
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+#dashModal.open { display: flex; align-items: flex-start; justify-content: center; }
+
+.dash-wrap {
+  background: #0f1535;
+  border: 1px solid rgba(0,181,164,0.25);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden;
+  animation: fadeUp 0.35s ease both;
+}
+
+/* DASH TOPBAR */
+.dash-topbar {
+  background: #0a0e28;
+  border-bottom: 1px solid rgba(0,181,164,0.15);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dash-topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--teal);
+  flex: 1;
+  min-width: 160px;
+}
+
+.dash-select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(0,181,164,0.3);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+}
+
+.dash-select option { background: #0f1535; }
+
+.dash-export-btn {
+  background: var(--teal);
+  color: var(--navy);
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dash-close-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--grey);
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* DASH BODY */
+.dash-body { padding: 1.5rem; }
+
+/* KPI ROW */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,181,164,0.15);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.kpi-card.green::after { background: #22c55e; }
+.kpi-card.red::after { background: #ef4444; }
+.kpi-card.amber::after { background: #f59e0b; }
+.kpi-card.teal::after { background: var(--teal); }
+
+.kpi-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.kpi-delta {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.kpi-delta.up { color: #22c55e; }
+.kpi-delta.down { color: #ef4444; }
+.kpi-delta.neutral { color: #f59e0b; }
+
+/* CHART GRID */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.dash-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,181,164,0.12);
+  border-radius: 10px;
+  padding: 1.2rem;
+}
+
+.panel-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 1rem;
+}
+
+canvas { display: block; width: 100% !important; }
+
+/* VARIANCE TABLE */
+.var-table { width: 100%; border-collapse: collapse; }
+.var-table th {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-align: left;
+  padding: 0 0 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.var-table td {
+  font-size: 0.8rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--white);
+  vertical-align: middle;
+}
+.var-table td:last-child { text-align: right; }
+
+.rag {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.rag.green { background: #22c55e; }
+.rag.amber { background: #f59e0b; }
+.rag.red { background: #ef4444; }
+
+/* ENTITY BAR */
+.entity-bars { display: flex; flex-direction: column; gap: 0.7rem; }
+.entity-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.78rem; }
+.entity-name { width: 120px; color: var(--grey); flex-shrink: 0; font-size: 0.72rem; }
+.entity-bar-track { flex: 1; background: rgba(255,255,255,0.06); border-radius: 3px; height: 8px; overflow: hidden; }
+.entity-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--teal), var(--teal-light)); transition: width 1s ease; }
+.entity-pct { width: 38px; text-align: right; color: var(--white); font-weight: 600; font-size: 0.72rem; }
+</style>
+
+<!-- DASHBOARD MODAL -->
+<div id="dashModal">
+  <div class="dash-wrap">
+    <div class="dash-topbar">
+      <div class="dash-topbar-title">📊 Progeny Group — SLT Finance Dashboard</div>
+      <select class="dash-select" onchange="switchEntity(this.value)">
+        <option value="group">Progeny Group (Consolidated)</option>
+        <option value="wealth">Progeny Wealth</option>
+        <option value="legal">Progeny Legal</option>
+        <option value="fry">The Fry Group</option>
+        <option value="carbon">Carbon Financial Partners</option>
+      </select>
+      <select class="dash-select">
+        <option>FY 2025</option>
+        <option>Q4 2025</option>
+        <option>Q3 2025</option>
+      </select>
+      <button class="dash-export-btn" onclick="showExportToast()">⬇ Export Board Pack</button>
+      <button class="dash-close-btn" onclick="closeDashboard()">✕ Close</button>
+    </div>
+
+    <div class="dash-body">
+      <!-- KPIs -->
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-card green">
+          <div class="kpi-label">Revenue (YTD)</div>
+          <div class="kpi-value" id="kpi-rev">£42.1m</div>
+          <div class="kpi-delta up" id="kpi-rev-d">▲ 8.3% vs budget</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-label">EBITDA (YTD)</div>
+          <div class="kpi-value" id="kpi-ebitda">£6.8m</div>
+          <div class="kpi-delta neutral" id="kpi-ebitda-d">▼ 1.2% vs budget</div>
+        </div>
+        <div class="kpi-card teal">
+          <div class="kpi-label">Cash Balance</div>
+          <div class="kpi-value" id="kpi-cash">£9.4m</div>
+          <div class="kpi-delta up" id="kpi-cash-d">▲ £1.1m vs prior month</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Headcount</div>
+          <div class="kpi-value" id="kpi-hc">634</div>
+          <div class="kpi-delta up" id="kpi-hc-d">▲ 12 vs prior month</div>
+        </div>
+      </div>
+
+      <!-- MAIN CHARTS -->
+      <div class="chart-grid">
+        <div class="dash-panel">
+          <div class="panel-title">Revenue vs Budget — Monthly (£'000)</div>
+          <canvas id="revChart" height="180"></canvas>
+        </div>
+        <div class="dash-panel">
+          <div class="panel-title">Key Variances — RAG Status</div>
+          <table class="var-table" id="varTable">
+            <thead><tr><th>Area</th><th>Variance</th><th>Status</th></tr></thead>
+            <tbody id="varBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="chart-grid-bottom">
+        <div class="dash-panel">
+          <div class="panel-title">Cash Flow Trend — Rolling 3 Month (£'000)</div>
+          <canvas id="cashChart" height="160"></canvas>
+        </div>
+        <div class="dash-panel">
+          <div class="panel-title">Revenue by Entity — % of Group</div>
+          <div class="entity-bars" id="entityBars"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--teal);color:var(--navy);padding:0.7rem 1.5rem;border-radius:8px;font-size:0.82rem;font-weight:700;z-index:2000;opacity:0;transition:all 0.4s ease;pointer-events:none;">
+  ✓ Board Pack export queued — PDF generating...
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Tier accordion
+  function toggleTier(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  // Timeline animation
+  const timelineSection = document.getElementById('timeline');
+  const timelineNodes = document.querySelectorAll('.timeline-node');
+  const progress = document.getElementById('timelineProgress');
+
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        timelineNodes.forEach(n => n.classList.add('visible'));
+        progress.style.width = '100%';
+      }
+    });
+  }, { threshold: 0.3 });
+  tlObserver.observe(timelineSection);
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  const ENTITIES = {
+    group:  { rev: '£42.1m', revD: '▲ 8.3% vs budget', ebitda: '£6.8m', ebitdaD: '▼ 1.2% vs budget', cash: '£9.4m', cashD: '▲ £1.1m vs prior month', hc: '634', hcD: '▲ 12 vs prior month',
+      revData:  [3100,3400,3200,3600,3800,3500,4100,3900,4200,4400,4100,4600],
+      budData:  [3000,3200,3300,3400,3600,3700,3800,3900,4000,4100,4200,4300],
+      cashData: [8100,8700,9400],
+      vars: [['Staff Costs','▼ £142k','amber'],['Technology','▲ £38k','green'],['Premises','▼ £205k','red'],['Professional Fees','▲ £12k','green'],['Travel & Ents','▼ £67k','amber']],
+      entities: [['Progeny Wealth',38],['The Fry Group',24],['Progeny Legal',18],['Carbon Financial',12],['Other Entities',8]]
+    },
+    wealth: { rev: '£16.0m', revD: '▲ 11.2% vs budget', ebitda: '£3.1m', ebitdaD: '▲ 2.4% vs budget', cash: '£4.2m', cashD: '▲ £0.4m vs prior month', hc: '241', hcD: '▲ 5 vs prior month',
+      revData:  [1100,1200,1150,1300,1350,1280,1450,1380,1500,1560,1490,1620],
+      budData:  [1050,1100,1150,1200,1250,1300,1350,1380,1400,1430,1460,1490],
+      cashData: [3600,3900,4200],
+      vars: [['Staff Costs','▲ £22k','green'],['Platform Fees','▲ £18k','green'],['Marketing','▼ £55k','amber'],['Premises','▼ £30k','amber'],['IT Licences','▲ £8k','green']],
+      entities: [['Leeds HQ',45],['London',30],['Manchester',15],['Other',10]]
+    },
+    legal: { rev: '£7.6m', revD: '▼ 2.1% vs budget', ebitda: '£1.2m', ebitdaD: '▼ 4.8% vs budget', cash: '£1.9m', cashD: '▼ £0.1m vs prior month', hc: '142', hcD: '─ No change',
+      revData:  [580,610,590,630,650,620,680,660,700,710,690,720],
+      budData:  [620,635,650,665,680,695,700,710,720,725,730,740],
+      cashData: [2100,2000,1900],
+      vars: [['Fee Income','▼ £88k','red'],['Staff Costs','▲ £44k','amber'],['Disbursements','▼ £12k','green'],['Premises','▼ £15k','green'],['WIP Movement','▼ £110k','red']],
+      entities: [['Corporate Law',55],['Private Law',30],['Conveyancing',15]]
+    },
+    fry: { rev: '£10.1m', revD: '▲ 5.6% vs budget', ebitda: '£1.8m', ebitdaD: '▲ 1.1% vs budget', cash: '£2.1m', cashD: '▲ £0.2m vs prior month', hc: '128', hcD: '▲ 3 vs prior month',
+      revData:  [740,780,760,820,850,800,900,860,920,960,910,1000],
+      budData:  [720,750,770,800,820,840,860,880,900,920,940,960],
+      cashData: [1700,1900,2100],
+      vars: [['Dubai AUM Fees','▲ £65k','green'],['HK Office Costs','▼ £38k','amber'],['FX Impact','▼ £28k','amber'],['Staff Costs','▲ £14k','green'],['Compliance','▼ £20k','amber']],
+      entities: [['UK',58],['Dubai',22],['Hong Kong',12],['Singapore',8]]
+    },
+    carbon: { rev: '£5.1m', revD: '▲ 3.2% vs budget', ebitda: '£0.9m', ebitdaD: '▼ 0.8% vs budget', cash: '£1.2m', cashD: '▲ £0.1m vs prior month', hc: '62', hcD: '▲ 2 vs prior month',
+      revData:  [380,400,390,420,440,410,450,430,470,490,460,500],
+      budData:  [370,385,395,410,420,435,445,455,465,475,485,495],
+      cashData: [1000,1100,1200],
+      vars: [['AUM Fees','▲ £18k','green'],['Staff Costs','▼ £22k','amber'],['Office Costs','▲ £5k','green'],['Technology','▼ £11k','amber'],['T&E','▲ £3k','green']],
+      entities: [['Edinburgh HQ',70],['Glasgow',20],['Aberdeen',10]]
+    }
+  };
+
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const cashMonths = ['Oct','Nov','Dec'];
+  let revChart, cashChart, currentEntity = 'group';
+
+  function openDashboard() {
+    document.getElementById('dashModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { renderDashboard('group'); }, 100);
+  }
+
+  function closeDashboard() {
+    document.getElementById('dashModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function switchEntity(val) {
+    currentEntity = val;
+    renderDashboard(val);
+  }
+
+  function renderDashboard(key) {
+    const d = ENTITIES[key];
+
+    // KPIs
+    document.getElementById('kpi-rev').textContent = d.rev;
+    document.getElementById('kpi-rev-d').textContent = d.revD;
+    document.getElementById('kpi-rev-d').className = 'kpi-delta ' + (d.revD.startsWith('▲') ? 'up' : 'down');
+    document.getElementById('kpi-ebitda').textContent = d.ebitda;
+    document.getElementById('kpi-ebitda-d').textContent = d.ebitdaD;
+    document.getElementById('kpi-ebitda-d').className = 'kpi-delta ' + (d.ebitdaD.startsWith('▲') ? 'up' : 'neutral');
+    document.getElementById('kpi-cash').textContent = d.cash;
+    document.getElementById('kpi-cash-d').textContent = d.cashD;
+    document.getElementById('kpi-cash-d').className = 'kpi-delta ' + (d.cashD.startsWith('▲') ? 'up' : 'down');
+    document.getElementById('kpi-hc').textContent = d.hc;
+    document.getElementById('kpi-hc-d').textContent = d.hcD;
+    document.getElementById('kpi-hc-d').className = 'kpi-delta ' + (d.hcD.startsWith('▲') ? 'up' : 'neutral');
+
+    // Variance table
+    const tbody = document.getElementById('varBody');
+    tbody.innerHTML = d.vars.map(([area, variance, rag]) =>
+      `<tr><td><span class="rag ${rag}"></span>${area}</td><td style="color:${rag==='red'?'#ef4444':rag==='amber'?'#f59e0b':'#22c55e'}">${variance}</td><td><span style="background:${rag==='red'?'rgba(239,68,68,0.15)':rag==='amber'?'rgba(245,158,11,0.15)':'rgba(34,197,94,0.15)'};color:${rag==='red'?'#ef4444':rag==='amber'?'#f59e0b':'#22c55e'};padding:0.2rem 0.6rem;border-radius:4px;font-size:0.7rem;font-weight:700;">${rag.toUpperCase()}</span></td></tr>`
+    ).join('');
+
+    // Entity bars
+    const barsEl = document.getElementById('entityBars');
+    barsEl.innerHTML = d.entities.map(([name, pct]) =>
+      `<div class="entity-row"><div class="entity-name">${name}</div><div class="entity-bar-track"><div class="entity-bar-fill" style="width:${pct}%"></div></div><div class="entity-pct">${pct}%</div></div>`
+    ).join('');
+
+    const chartDefaults = {
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' £' + ctx.raw.toLocaleString() + 'k' } } },
+      scales: {
+        x: { ticks: { color: '#8892a4', font: { size: 10, family: 'DM Sans' } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { ticks: { color: '#8892a4', font: { size: 10, family: 'DM Sans' }, callback: v => '£' + (v/1000).toFixed(0) + 'k' }, grid: { color: 'rgba(255,255,255,0.06)' } }
+      }
+    };
+
+    // Revenue chart
+    if (revChart) revChart.destroy();
+    revChart = new Chart(document.getElementById('revChart'), {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          { label: 'Actual', data: d.revData, backgroundColor: 'rgba(0,181,164,0.7)', borderRadius: 4, borderSkipped: false },
+          { label: 'Budget', data: d.budData, type: 'line', borderColor: 'rgba(255,255,255,0.3)', borderDash: [4,4], pointRadius: 0, tension: 0.3, fill: false }
+        ]
+      },
+      options: { ...chartDefaults, responsive: true }
+    });
+
+    // Cash chart
+    if (cashChart) cashChart.destroy();
+    cashChart = new Chart(document.getElementById('cashChart'), {
+      type: 'line',
+      data: {
+        labels: cashMonths,
+        datasets: [{
+          data: d.cashData,
+          borderColor: '#00b5a4',
+          backgroundColor: 'rgba(0,181,164,0.1)',
+          borderWidth: 2,
+          pointBackgroundColor: '#00b5a4',
+          pointRadius: 5,
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: { ...chartDefaults, responsive: true }
+    });
+  }
+
+  function showExportToast() {
+    const t = document.getElementById('toast');
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(60px)'; }, 3000);
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('dashModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDashboard();
+  });
+</script>
+</body>
+</html>
